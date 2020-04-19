@@ -6,7 +6,8 @@
 mkdir build
 cd build
 cmake ..
-make(make VERBOSE=1)
+make(make VERBOSE=1)  or
+cmake --build . --config Release
 ~~~
 以上可以在build文件夹里生成makefile等文件，并直接生成可执行文件，其他常用命令还包括：
 ~~~
@@ -30,7 +31,6 @@ make distcheck
 cmake -DCMAKE_INSTALL_PREFIX=/tmp/hello/usr
 ~~~
 自定义安装文件夹下，默认安装在/usr/local下
-
 
 ## 进阶(按文件类型生成)
 按照文件类型可以建立工程文件框架：
@@ -62,6 +62,12 @@ ${HELLO_SOURCE_DIR}/src/hello.c
 SET(EXECUTABLE_OUTPUT_PATH ${HELLO_BINARY_DIR}/bin)
 ADD_EXECUTABLE(hello ${SRC_list})
 ...
+ ~~~
+ 
+ ## cmake源码包卸载
+ 找到之前的build文件夹，里面会有一个叫install_manifest.txt的纯文本文件，里面的内容就是你cmake安装的文件，我们只要以这个内容作为变量交给rm指令处理就好：
+ ~~~
+ cat install_manifest.txt | sudo xargs rm
  ~~~
  ## Notes
 **通过外部编译进行工程构建,HELLO_SOURCE_DIR 仍然指代工程路径,即 /(根目录)，而 HELLO_BINARY_DIR 则指代编译路径,即/build.**
